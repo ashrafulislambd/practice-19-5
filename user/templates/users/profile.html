@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    <h1>Profile</h1>
+    <a href="{% url "users:change_password" %}">Change Password using Old Password</a><br/>
+    <a href="{% url "users:set_password" %}">Change Password without using Old Password</a>
+{% endblock %}

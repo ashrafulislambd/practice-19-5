@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    <a class="btn btn-primary mr-2" href="{% url "music:create_musician" %}">Create Musician</a>
+    <a class="btn btn-primary mr-2" href="{% url "music:create_album" %}">Create Album</a>
+    <h1>Albums</h1>
+    <table class="table table-striped">
+        <thead>
+            <th>Musician Name</th>
+            <th>Email</th>
+            <th>Album Rating</th>
+            <th>Instrument Type</th>
+            <th>Album Name</th>
+            <th>Release Date</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for album in album_list %}
+                <tr>
+                    <td>{{ album.musician.first_name }} {{ album.musician.last_name }}</td>
+                    <td>{{ album.musician.email }}</td>
+                    <td>{{ album.rating }}</td>
+                    <td>{{ album.musician.instrument_type }}</td>
+                    <td>{{ album.album_name }}</td>
+                    <td>{{ album.release_date }}</td>
+                    {% if user.is_authenticated %}
+                        <td>
+                            <a href="{% url "music:edit_album" album.id %}">Edit</a> || 
+                            <a href="{% url "music:edit_musician" album.musician.id %}">Edit Musician</a><br/>
+                            <a href="{% url "music:delete_album" album.id %}">Delete</a> ||
+                            <a href="{% url "music:delete_musician" album.musician.id %}">Delete Musician</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
